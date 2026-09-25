@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="burgundyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B1426" />
+      <stop offset="100%" stop-color="#4A0E17" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="29" fill="url(#burgundyGrad)" stroke="#F7E9B8" stroke-width="3" />
+  <text x="32" y="34" fill="#F7E9B8" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">H</text>
+</svg>

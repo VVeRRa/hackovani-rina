@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+:root {
+  /* Eye-Friendly Refined Bordeaux Palette */
+  --burgundy-deep: #2A080F;
+  --burgundy-dark: #4A0E17;
+  --burgundy-main: #6B1426;
+  --burgundy-light: #8B1E3F;
+  --burgundy-rose: #C15C74;
+  --burgundy-soft: #F5E8EB;
+
+  --accent-gold: #C5A028;
+  --accent-gold-light: #F7E9B8;
+  --accent-gold-hover: #B08D1E;
+
+  /* Eye-Friendly Warm Alabaster Canvas */
+  --bg-main: #FAF6F2;
+  --bg-cream: #F4ECE4;
+  --bg-cream-dark: #EBE0D6;
+  
+  /* Cards & Elevate Panels */
+  --card-bg: #FFFFFF;
+  --card-bg-subtle: #F8F2EC;
+  
+  /* Readable Text Tokens */
+  --text-primary: #260A10;
+  --text-secondary: #583940;
+  --text-muted: #8A6D74;
+  --text-light: #FFFFFF;
+
+  --border-light: rgba(107, 20, 38, 0.10);
+  --border-medium: rgba(107, 20, 38, 0.20);
+  --border-gold: rgba(197, 160, 40, 0.45);
+
+  --shadow-sm: 0 4px 12px rgba(42, 8, 15, 0.04);
+  --shadow-md: 0 8px 24px rgba(42, 8, 15, 0.08);
+  --shadow-lg: 0 16px 40px rgba(42, 8, 15, 0.12);
+  --shadow-burgundy: 0 8px 24px rgba(107, 20, 38, 0.20);
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--burgundy-deep);
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input, select, textarea {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  -webkit-appearance: none;
+}
+
+/* Visible keyboard focus for every interactive control */
+:is(
+  a[href],
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: 3px solid var(--accent-gold-light) !important;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--burgundy-main) !important;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--burgundy-main) !important;
+}
+
+input::placeholder {
+  color: rgba(247, 233, 184, 0.95);
+  opacity: 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--burgundy-rose);
+  border-radius: 4px;
+}
+
+/* Glassmorphism Utilities for Chrome, Safari & Mobile */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+.glass-burgundy {
+  background: rgba(107, 20, 38, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-gold);
+  color: #FFFFFF;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Badges */
+.badge-gold {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  line-height: 1 !important;
+  background: linear-gradient(135deg, #4A0E17 0%, #2A080F 100%);
+  color: #F7E9B8;
+  border: 1px solid #F7E9B8;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(42, 8, 15, 0.3);
+  white-space: nowrap;
+}
+
+.badge-burgundy {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  line-height: 1 !important;
+  background: var(--burgundy-soft);
+  border: 1px solid var(--border-light);
+  color: var(--burgundy-main);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Desktop Navigation Link Button Styles */
+.desktop-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: var(--radius-full);
+  background: rgba(247, 233, 184, 0.12);
+  color: #F7E9B8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(247, 233, 184, 0.3);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.desktop-nav-link:hover,
+.desktop-nav-link:focus-visible {
+  background: #F7E9B8;
+  color: #4A0E17;
+  border-color: #F7E9B8;
+  box-shadow: 0 4px 14px rgba(247, 233, 184, 0.35);
+  transform: translateY(-1px);
+}
+
+[role="dialog"]:focus-visible {
+  outline: 3px solid var(--burgundy-main);
+  outline-offset: -6px;
+}
+
+/* Responsive Mobile, Tablet & Desktop Optimizations */
+@media (min-width: 600px) {
+  .header-lang-container {
+    display: flex !important;
+  }
+  .mobile-lang-dropdown {
+    display: none !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .header-nav-container {
+    padding: 12px 16px !important;
+  }
+  .header-logo-text {
+    display: none !important;
+  }
+  .header-lang-container {
+    display: none !important;
+  }
+  .mobile-lang-dropdown {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1250px) {
+  .header-nav-container {
+    padding: 16px 20px 10px 20px !important;
+  }
+  .header-main-row {
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+  }
+  .desktop-nav-link {
+    padding: 5px 10px !important;
+    font-size: 0.78rem !important;
+  }
+  .desktop-search-box {
+    width: 150px !important;
+    min-width: 110px !important;
+  }
+  .header-lang-container button {
+    padding: 2px 6px !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+  .mobile-menu-dropdown {
+    display: none !important;
+  }
+  .desktop-nav-links {
+    display: flex !important;
+  }
+  .desktop-search-box {
+    display: block !important;
+  }
+}
+
+@media (max-width: 959px) {
+  .header-nav-container {
+    padding: 14px 18px !important;
+  }
+  .mobile-menu-toggle {
+    display: flex !important;
+  }
+  .desktop-nav-links {
+    display: none !important;
+  }
+  .desktop-search-box {
+    display: none !important;
+  }
+
+  /* Modal Padding, Height & Radius Adjustments on Mobile Devices */
+  .product-detail-modal-backdrop {
+    padding: 10px 8px !important;
+    padding-top: max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .mobile-modal-container,
+  .product-detail-modal-card {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    max-height: 75vh !important;
+    max-height: 75dvh !important;
+    border-radius: var(--radius-md) !important;
+    margin: auto !important;
+  }
+
+  .product-detail-modal-scroll {
+    max-height: 75vh !important;
+    max-height: 75dvh !important;
+  }
+
+  .product-detail-image-frame {
+    padding-top: 60% !important;
+  }
+
+  .mobile-modal-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mobile-modal-padding {
+    padding: 14px 12px !important;
+  }
+
+  .product-detail-specs-col {
+    padding: 14px 16px 20px 16px !important;
+    gap: 12px !important;
+  }
+
+  .product-detail-image-col {
+    padding: 12px 12px 8px 12px !important;
+    gap: 8px !important;
+  }
+}
+
+/* Custom Sleek Scrollbar for Modals & Drawers with iOS Safari Smooth Scroll */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 14px 0;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(107, 20, 38, 0.35);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 20, 38, 0.65);
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 20, 38, 0.35) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Strict Body & HTML Scroll Lock for Modals & Drawers */
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden !important;
+  touch-action: none !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+}
+
+/* Soft Subdued Input & Textarea Placeholders */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(247, 233, 184, 0.7) !important;
+  opacity: 0.6 !important;
+  font-weight: 400 !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: rgba(247, 233, 184, 0.7) !important;
+  opacity: 0.6 !important;
+  font-weight: 400 !important;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: rgba(247, 233, 184, 0.7) !important;
+  opacity: 0.6 !important;
+  font-weight: 400 !important;
+}
+
+/* Voucher Input Placeholder Visibility */
+.voucher-input::placeholder {
+  color: #6B1426 !important;
+  opacity: 0.9 !important;
+  font-weight: 500 !important;
+}
+.voucher-input:focus {
+  border-color: #6B1426 !important;
+  box-shadow: 0 0 0 3px rgba(107, 20, 38, 0.15) !important;
+}

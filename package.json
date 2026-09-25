@@ -1,0 +1,29 @@
+{
+  "name": "hackovani-rina",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm test && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "typescript": "^5"
+  },
+  "allowScripts": {
+    "sharp@0.35.4": true,
+    "unrs-resolver@1.12.2": true
+  }
+}
