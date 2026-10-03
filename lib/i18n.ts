@@ -316,6 +316,22 @@ const WORD_TRANSLATIONS: Record<string, { cs: string; en: string; de: string }> 
   'modrý náramek': { cs: 'Modrý náramek', en: 'Blue Bracelet', de: 'Blaues Armband' },
   'modry naramek': { cs: 'Modrý náramek', en: 'Blue Bracelet', de: 'Blaues Armband' },
 
+  // Curated translations for the cleaned portfolio/demo catalogue
+  'šalvějová háčkovaná kabelka': { cs: 'Šalvějová háčkovaná kabelka', en: 'Sage Green Crochet Handbag', de: 'Salbeigrüne Häkeltasche' },
+  'ručně háčkovaná kabelka v jemném šalvějově zeleném odstínu.': { cs: 'Ručně háčkovaná kabelka v jemném šalvějově zeleném odstínu.', en: 'Hand-crocheted handbag in a soft sage green shade.', de: 'Handgehäkelte Handtasche in einem sanften Salbeigrün.' },
+  'háčkované pouzdro': { cs: 'Háčkované pouzdro', en: 'Textured Crochet Pouch', de: 'Strukturiertes Häkeletui' },
+  'kompaktní ručně háčkované pouzdro s výraznou strukturou.': { cs: 'Kompaktní ručně háčkované pouzdro s výraznou strukturou.', en: 'Compact hand-crocheted pouch with a distinctive textured finish.', de: 'Kompaktes handgehäkeltes Etui mit markanter Struktur.' },
+  'mentolová háčkovaná peněženka': { cs: 'Mentolová háčkovaná peněženka', en: 'Mint Crochet Wallet', de: 'Mintgrüne Häkelgeldbörse' },
+  'ručně háčkovaná peněženka ve svěžím mentolovém odstínu.': { cs: 'Ručně háčkovaná peněženka ve svěžím mentolovém odstínu.', en: 'Hand-crocheted wallet in a fresh mint green shade.', de: 'Handgehäkelte Geldbörse in einem frischen Mintgrün.' },
+  'vínová háčkovaná taška': { cs: 'Vínová háčkovaná taška', en: 'Burgundy Crochet Bag', de: 'Bordeauxrote Häkeltasche' },
+  'elegantní ručně háčkovaná taška v sytém vínovém odstínu.': { cs: 'Elegantní ručně háčkovaná taška v sytém vínovém odstínu.', en: 'Elegant hand-crocheted bag in a rich burgundy shade.', de: 'Elegante handgehäkelte Tasche in einem satten Bordeauxrot.' },
+  'pudrově růžová háčkovaná kabelka': { cs: 'Pudrově růžová háčkovaná kabelka', en: 'Blush Pink Crochet Handbag', de: 'Puderrosa Häkeltasche' },
+  'elegantní ručně háčkovaná kabelka v pudrově růžové barvě s ozdobným řetízkem.': { cs: 'Elegantní ručně háčkovaná kabelka v pudrově růžové barvě s ozdobným řetízkem.', en: 'Elegant hand-crocheted handbag in blush pink with a decorative chain strap.', de: 'Elegante handgehäkelte Handtasche in Puderrosa mit dekorativem Kettenriemen.' },
+  'modrý macramé náramek': { cs: 'Modrý macramé náramek', en: 'Blue Macramé Bracelet', de: 'Blaues Makramee-Armband' },
+  'ručně vyráběný nastavitelný náramek v jemných modrých tónech.': { cs: 'Ručně vyráběný nastavitelný náramek v jemných modrých tónech.', en: 'Adjustable handmade bracelet in soft blue tones.', de: 'Verstellbares handgefertigtes Armband in sanften Blautönen.' },
+  'šedá háčkovaná kabelka': { cs: 'Šedá háčkovaná kabelka', en: 'Grey Crochet Handbag', de: 'Graue Häkeltasche' },
+  'kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.': { cs: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.', en: 'Compact hand-crocheted handbag in a versatile grey shade.', de: 'Kompakte handgehäkelte Handtasche in einem vielseitigen Grauton.' },
+
   // Delivery Times
   'doba dodání': { cs: 'Doba dodání', en: 'Delivery time', de: 'Lieferzeit' },
   'doba doruceni': { cs: 'Doba doručení', en: 'Delivery time', de: 'Lieferzeit' },
@@ -421,11 +437,48 @@ const WORD_TRANSLATIONS: Record<string, { cs: string; en: string; de: string }> 
   'material': { cs: 'Materiál', en: 'Material', de: 'Material' },
   'hmotnost': { cs: 'Hmotnost', en: 'Weight', de: 'Gewicht' },
 
+  // Portfolio/demo project copy
+  'háčkování rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.': {
+    cs: 'Háčkování Rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. Obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.',
+    en: 'Háčkování Rina is a demo e-commerce project focused on handmade crochet accessories. The store content demonstrates its features and product-data workflows.',
+    de: 'Háčkování Rina ist ein Demo-Onlineshop für handgefertigte Häkelaccessoires. Die Inhalte dienen dazu, die Funktionen und Produktdaten-Workflows des Shops zu demonstrieren.'
+  },
+  'katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless cms.': {
+    cs: 'Katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless CMS.',
+    en: 'The catalogue demonstrates categories, variants, product attributes, filtering and multilingual content managed through a headless CMS.',
+    de: 'Der Katalog demonstriert Kategorien, Varianten, Produktattribute, Filterung und mehrsprachige Inhalte, die über ein Headless CMS verwaltet werden.'
+  },
+  'projekt je stále ve vývoji a postupně přibývají další funkce a obsah.': {
+    cs: 'Projekt je stále ve vývoji a postupně přibývají další funkce a obsah.',
+    en: 'The project is still in development, with more features and content being added over time.',
+    de: 'Das Projekt befindet sich noch in Entwicklung und wird schrittweise um weitere Funktionen und Inhalte ergänzt.'
+  },
+  'ukázkový projekt — produkty, fotografie a obsah slouží pouze pro demonstrační účely.': {
+    cs: 'Ukázkový projekt — produkty, fotografie a obsah slouží pouze pro demonstrační účely.',
+    en: 'Demo project — products, images and content are for demonstration purposes only.',
+    de: 'Demo-Projekt — Produkte, Bilder und Inhalte dienen ausschließlich zu Demonstrationszwecken.'
+  },
+
   // DatoCMS Page Structured Text Paragraphs & Sentences
   'tady je napsáno něco hezkého o mně.': {
     cs: 'Tady je napsáno něco hezkého o mně.',
     en: 'Here is something nice written about me.',
     de: 'Hier steht etwas Schönes über mich.'
+  },
+  'háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.': {
+    cs: 'Háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. Každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.',
+    en: 'Crochet is my way of combining creativity, colour and honest handcraft. Every piece grows stitch by stitch, which makes each one a little unique.',
+    de: 'Häkeln ist für mich eine Möglichkeit, Kreativität, Farbe und ehrliche Handarbeit zu verbinden. Jedes Stück entsteht Masche für Masche und ist dadurch ein kleines Unikat.'
+  },
+  'tvořím především kabelky, tašky, peněženky a drobné doplňky. baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.': {
+    cs: 'Tvořím především kabelky, tašky, peněženky a drobné doplňky. Baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.',
+    en: 'I mainly create handbags, bags, wallets and small accessories. I enjoy combining simple shapes with distinctive colours to make pieces that look good and are genuinely useful.',
+    de: 'Ich fertige vor allem Handtaschen, Taschen, Geldbörsen und kleine Accessoires. Dabei kombiniere ich gern klare Formen mit ausdrucksstarken Farben und gestalte Stücke, die schön aussehen und im Alltag wirklich praktisch sind.'
+  },
+  'jak výrobky vznikají? nakoukněte do zákulisí mé tvorby.': {
+    cs: 'Jak výrobky vznikají? Nakoukněte do zákulisí mé tvorby.',
+    en: 'How are the pieces made? Take a look behind the scenes.',
+    de: 'Wie entstehen die Stücke? Werfen Sie einen Blick hinter die Kulissen.'
   },
   'níže se podívejte, kdo pro vás s láskou háčkuje <3': {
     cs: 'Níže se podívejte, kdo pro vás s láskou háčkuje <3',
