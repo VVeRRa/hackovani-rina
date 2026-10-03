@@ -102,7 +102,10 @@ for (const item of products) {
   const titleField = Object.hasOwn(a, 'product_title') ? 'product_title' : Object.hasOwn(a, 'title') ? 'title' : 'name';
   const descriptionField = Object.hasOwn(a, 'product_description') ? 'product_description' : Object.hasOwn(a, 'product_desription') ? 'product_desription' : 'description';
   const oldTitle = pickString(a[titleField]);
-  const entry = catalogue.find((x) => x.match.some((re) => re.test(oldTitle)));
+  const entry = catalogue.find((x) =>
+    x.match.some((re) => re.test(oldTitle)) &&
+    (oldTitle !== x.title || pickString(a[descriptionField]) !== x.description)
+  );
 
   if (!entry) {
     console.log(`SKIP  ${item.id}  "${oldTitle}" (no safe match)`);
@@ -189,6 +192,12 @@ if (variantType) {
     );
     console.log(`\nVARIANT ${variant.id}: "${name}"`);
     if (description) console.log(`  description: "${description}"`);
+    for (const [key, raw] of Object.entries(a)) {
+      if (/color|colour|size|material|wool|string|width/i.test(key)) {
+        const shown = pickString(raw) || (typeof raw === 'number' ? raw : '');
+        if (shown !== '' && shown !== undefined) console.log(`  ${key}: "${shown}"`);
+      }
+    }
 
     for (const key of woolWidthKeys(a)) {
       const raw = a[key];
