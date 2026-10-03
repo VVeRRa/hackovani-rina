@@ -198,7 +198,10 @@ if (variantType) {
     if (typeof value === 'number') return `${value} mm`;
     if (typeof value !== 'string') return value;
     const trimmed = value.trim();
-    if (!trimmed || /\bmm\b/i.test(trimmed)) return trimmed;
+    if (!trimmed) return trimmed;
+    // Canonical display format: "<number> mm" (with one space).
+    const numericMm = trimmed.match(/^(\d+(?:[.,]\d+)?)\s*mm$/i);
+    if (numericMm) return `${numericMm[1]} mm`;
     if (/^\d+(?:[.,]\d+)?$/.test(trimmed)) return `${trimmed} mm`;
     return trimmed;
   };
