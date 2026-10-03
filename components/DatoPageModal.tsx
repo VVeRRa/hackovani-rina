@@ -72,6 +72,18 @@ export const DatoPageModal: React.FC<DatoPageModalProps> = ({ page, onClose }) =
     }
 
     if (node.type === 'paragraph') {
+      const rawParagraphText = (node.children || [])
+        .filter((child) => child?.type === 'span' && typeof child.value === 'string')
+        .map((child) => String(child.value))
+        .join('')
+        .trim()
+        .toLowerCase();
+      const isEmptyContactLabel =
+        (page.title?.toLowerCase().includes('kontakt') || page.title?.toLowerCase().includes('contact')) &&
+        ['tel:', 'email:', 'facebook:', 'instagram:'].includes(rawParagraphText);
+
+      if (isEmptyContactLabel) return null;
+
       return (
         <p key={idx} style={{ marginBottom: '16px', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
           {node.children?.map(renderNode)}
