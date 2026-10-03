@@ -36,6 +36,26 @@ const catalogue = [
   { match: [/grey bag\s*456/i, /gray bag\s*456/i, /^[sš]ed[aá]\s+ta[sš]ka\s*456$/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
 ];
 
+const aboutPageCopy = new Map([
+  ['Tady je napsáno něco hezkého o mně. Třeba, že jsem moc šikovná...', 'Háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. Každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.'],
+  ['Níže se podívejte, kdo pro vás s láskou háčkuje <3', 'Tvořím především kabelky, tašky, peněženky a drobné doplňky. Baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.'],
+  ['Rádi byste viděli, jak produkty vznikají? Mrkněte na video!', 'Jak výrobky vznikají? Nakoukněte do zákulisí mé tvorby.'],
+]);
+
+function replaceStructuredTextValues(node, replacements) {
+  if (!node || typeof node !== 'object') return 0;
+  let changed = 0;
+  if (typeof node.value === 'string' && replacements.has(node.value)) {
+    node.value = replacements.get(node.value);
+    changed += 1;
+  }
+  if (Array.isArray(node.children)) {
+    for (const child of node.children) changed += replaceStructuredTextValues(child, replacements);
+  }
+  if (node.document) changed += replaceStructuredTextValues(node.document, replacements);
+  return changed;
+}
+
 const pagePlaceholderPatterns = [
   /tady je naps[aá]no n[eě]co hezk[eé]ho o mn[eě]/i,
   /jsem moc [sš]ikovn[aá]/i,
@@ -437,6 +457,25 @@ if (pageModel) {
     const slug = pickString(a.slug) || '';
     const strings = collectStructuredTextStrings(a.structured_text);
     console.log(`\nPAGE ${page.id}: "${title}" [${slug}]`);
+
+    if (title.toLowerCase() === 'o mně') {
+      const nextStructuredText = structuredClone(a.structured_text);
+      const changed = replaceStructuredTextValues(nextStructuredText, aboutPageCopy);
+      if (changed > 0) {
+        console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} about-page copy: ${changed} text node(s)`);
+        if (APPLY) {
+          const wasPublished = ['published', 'updated'].includes(page.meta?.status);
+          await request(`/items/${page.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ data: { type: 'item', id: page.id, attributes: { structured_text: nextStructuredText } } }),
+          });
+          if (wasPublished) await request(`/items/${page.id}/publish`, {
+            method: 'PUT',
+            body: JSON.stringify({ data: { type: 'item', id: page.id } }),
+          });
+        }
+      }
+    }
     for (const value of strings) {
       const clean = value.trim();
       if (!clean) continue;
