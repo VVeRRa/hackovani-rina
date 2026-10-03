@@ -113,6 +113,9 @@ export const Footer: React.FC<FooterProps> = ({ siteInfo, pages, onSelectPage })
         >
           <div>
             © {new Date().getFullYear()} {translate(siteInfo.name)}. {t('footerCopyright')}
+            <div style={{ marginTop: '6px', fontSize: '0.76rem', color: 'rgba(255,255,255,0.5)' }}>
+              {translate('Ukázkový projekt — produkty, fotografie a obsah slouží pouze pro demonstrační účely.')}
+            </div>
           </div>
         </div>
       </div>
