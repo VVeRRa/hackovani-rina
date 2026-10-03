@@ -28,12 +28,12 @@ const headers = {
 
 const catalogue = [
   { match: [/456789\s*123/i, /green handbag/i], title: 'Šalvějová háčkovaná kabelka', description: 'Ručně háčkovaná kabelka v jemném šalvějově zeleném odstínu.' },
-  { match: [/snuff box/i], title: 'Háčkované pouzdro', description: 'Kompaktní ručně háčkované pouzdro s výraznou strukturou.' },
-  { match: [/wallet/i, /mint purse/i], title: 'Mentolová háčkovaná peněženka', description: 'Ručně háčkovaná peněženka ve svěžím mentolovém odstínu.' },
-  { match: [/^bag\s*123$/i, /red bag/i], title: 'Vínová háčkovaná taška', description: 'Elegantní ručně háčkovaná taška v sytém vínovém odstínu.' },
+  { match: [/snuff box/i, /tabat[eě]rka/i], title: 'Háčkované pouzdro', description: 'Kompaktní ručně háčkované pouzdro s výraznou strukturou.' },
+  { match: [/wallet/i, /mint purse/i, /pen[eě][zž]enka/i], title: 'Mentolová háčkovaná peněženka', description: 'Ručně háčkovaná peněženka ve svěžím mentolovém odstínu.' },
+  { match: [/^bag\s*123$/i, /red bag/i, /^ta[sš]ka\s*123$/i], title: 'Vínová háčkovaná taška', description: 'Elegantní ručně háčkovaná taška v sytém vínovém odstínu.' },
   { match: [/^handbag\s*123$/i, /^kabelka\s*123$/i], title: 'Pudrově růžová háčkovaná kabelka', description: 'Elegantní ručně háčkovaná kabelka v pudrově růžové barvě s ozdobným řetízkem.' },
-  { match: [/bracelet\s*123/i], title: 'Modrý macramé náramek', description: 'Ručně vyráběný nastavitelný náramek v jemných modrých tónech.' },
-  { match: [/grey bag\s*456/i, /gray bag\s*456/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
+  { match: [/bracelet\s*123/i, /n[aá]ramek\s*123/i], title: 'Modrý macramé náramek', description: 'Ručně vyráběný nastavitelný náramek v jemných modrých tónech.' },
+  { match: [/grey bag\s*456/i, /gray bag\s*456/i, /^[sš]ed[aá]\s+ta[sš]ka\s*456$/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
 ];
 
 const pickString = (value) => {
