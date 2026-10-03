@@ -60,6 +60,7 @@ The in-process rate limits are intentionally lightweight and per server instance
 
 ## WIP / known gaps
 
+- extend the internal admin with a configurable product-display setup: the shop owner should be able to choose dynamically which product properties/attributes are shown on catalogue preview cards and which are shown on the product detail page. The goal is to avoid requiring a programmer when a new property is added to the DatoCMS product model; newly added properties should be discoverable/configurable from the admin UI rather than hard-coded in the storefront.
 - payment gateway and real order processing are not implemented yet
 - checkout is currently a UI prototype
 - authentication / customer accounts are not implemented
