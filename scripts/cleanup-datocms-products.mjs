@@ -46,6 +46,19 @@ const productPrices = {
   'cqTbHI2oSbqYHpcJbS34Tg': 1690,
 };
 
+const variantPropertyCleanup = {
+  'adYRPzWVSWacWw-VTUPo1Q': { product_variant_color: 'červená', product_variant_size: 'velká' },
+  'J3D7JcSzT0OkZeE-eUR_uA': { product_variant_color: 'modře žíhaná', product_variant_size: 'střední' },
+  'QwGJ0pGJRzKHwUjVRTmJBQ': { product_variant_color: 'zeleno-černá', product_variant_size: 'malá' },
+  'fmgb5I71SN6vpIM2TiYN5A': { product_variant_color: 'khaki', product_variant_size: 'malá' },
+  'UCINsXjJTqWNaoaw6MMRdw': { product_variant_color: 'lila', product_variant_size: 'malá' },
+  'BVVKaDBvR2S_2YEUoHKx6g': { product_variant_color: 'růžová', product_variant_size: 'malá' },
+  'eLcqb8euS-m02jQBeywfvA': { product_variant_color: 'bílá', product_variant_size: 'malá' },
+  'ZB2Zk4mWQ4qjX4g4X-0Mxw': { product_variant_color: 'modrá', product_variant_size: 'střední' },
+  'eCrGqaylQUyArTFM9A4sLQ': { product_variant_color: 'zelená', product_variant_size: 'malá' },
+  'Ekt0O-ndS7aqPxxsbTvA4w': { product_variant_color: 'modrá', product_variant_size: 'malá' },
+};
+
 const variantCleanup = {
   'adYRPzWVSWacWw-VTUPo1Q': { title: 'Velké červené háčkované pouzdro', description: 'Prostorné ručně háčkované pouzdro v červené barvě.', price: 590 },
   'J3D7JcSzT0OkZeE-eUR_uA': { title: 'Modře žíhané háčkované pouzdro', description: 'Středně velké ručně háčkované pouzdro v modře žíhaném provedení.', price: 540 },
@@ -222,6 +235,28 @@ if (variantType) {
       if (/color|colour|size|material|wool|string|width/i.test(key)) {
         const shown = pickString(raw) || (typeof raw === 'number' ? raw : '');
         if (shown !== '' && shown !== undefined) console.log(`  ${key}: "${shown}"`);
+      }
+    }
+
+    const propertyCleanup = variantPropertyCleanup[variant.id];
+    if (propertyCleanup) {
+      for (const [key, next] of Object.entries(propertyCleanup)) {
+        if (!Object.hasOwn(a, key)) continue;
+        const current = pickString(a[key]);
+        if (current === next) continue;
+        console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} ${key}: "${current}" -> "${next}"`);
+        if (APPLY) {
+          const raw = a[key];
+          const nextValue = raw && typeof raw === 'object' && !Array.isArray(raw)
+            ? { ...raw, [Object.keys(raw)[0] || 'en']: next }
+            : next;
+          const wasPublished = ['published', 'updated'].includes(variant.meta?.status);
+          await request(`/items/${variant.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ data: { type: 'item', id: variant.id, attributes: { [key]: nextValue } } }),
+          });
+          if (wasPublished) await request(`/items/${variant.id}/publish`, { method: 'PUT', body: JSON.stringify({ data: { type: 'item', id: variant.id } }) });
+        }
       }
     }
 
