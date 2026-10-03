@@ -318,6 +318,15 @@ if (variantType) {
 // changed; anything ambiguous is left untouched and shown by the audit.
 for (const product of products) {
   const a = product.attributes || {};
+  // Audit main-product display properties as well (colors, sizes, material, etc.)
+  // so legacy test values such as "zelena"/"modra" are visible before cleanup.
+  for (const [key, raw] of Object.entries(a)) {
+    if (/color|colour|size|material/i.test(key)) {
+      const shown = pickString(raw) || (typeof raw === 'number' ? raw : '');
+      if (shown !== '' && shown !== undefined) console.log(`PRODUCT PROPERTY ${product.id} ${key}: "${shown}"`);
+    }
+  }
+
   const targetPrice = productPrices[product.id];
   if (targetPrice !== undefined) {
     const priceField = Object.hasOwn(a, 'product_price') ? 'product_price' : 'price';
