@@ -427,7 +427,7 @@ for (const product of products) {
 // Audit CMS pages for obvious WIP placeholders. We deliberately do not rewrite
 // structured text automatically: page content and blocks deserve a separate,
 // reviewable cleanup rather than a risky blind mutation.
-const pageModel = models.find((m) => m.attributes?.api_key === 'page');
+const pageModel = itemTypes.find((m) => m.attributes?.api_key === 'page');
 if (pageModel) {
   const pages = allItems.filter((item) => item.relationships?.item_type?.data?.id === pageModel.id);
   console.log(`\nPages found: ${pages.length}`);
