@@ -36,6 +36,29 @@ const catalogue = [
   { match: [/grey bag\s*456/i, /gray bag\s*456/i, /^[sš]ed[aá]\s+ta[sš]ka\s*456$/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
 ];
 
+const productPrices = {
+  'PklZzwuTTq6evDrS33585Q': 1490,
+  'Mvuv3EkRRgOD-Ki2wXPkwQ': 290,
+  'UbIYdKkBSM2EjUj_qCCFxw': 1690,
+  'Hswn-zUvSoWbphKfdJKOIw': 1590,
+  'N-_0b05QToKJlwDXyERAIQ': 590,
+  'JQKKBaI6REeCj4W8H8iE_g': 490,
+  'cqTbHI2oSbqYHpcJbS34Tg': 1690,
+};
+
+const variantCleanup = {
+  'adYRPzWVSWacWw-VTUPo1Q': { title: 'Velké červené háčkované pouzdro', description: 'Prostorné ručně háčkované pouzdro v červené barvě.', price: 590 },
+  'J3D7JcSzT0OkZeE-eUR_uA': { title: 'Modře žíhané háčkované pouzdro', description: 'Středně velké ručně háčkované pouzdro v modře žíhaném provedení.', price: 540 },
+  'QwGJ0pGJRzKHwUjVRTmJBQ': { title: 'Zeleno-černé háčkované pouzdro', description: 'Malé ručně háčkované pouzdro v zeleno-černé kombinaci.', price: 490 },
+  'fmgb5I71SN6vpIM2TiYN5A': { title: 'Khaki háčkovaná peněženka', description: 'Malá ručně háčkovaná peněženka v khaki odstínu.', price: 590 },
+  'UCINsXjJTqWNaoaw6MMRdw': { title: 'Lila háčkovaná peněženka', description: 'Malá ručně háčkovaná peněženka v jemném lila odstínu.', price: 590 },
+  'BVVKaDBvR2S_2YEUoHKx6g': { title: 'Malá růžová háčkovaná kabelka', description: 'Malá ručně háčkovaná kabelka v růžovém odstínu.', price: 1490 },
+  'eLcqb8euS-m02jQBeywfvA': { title: 'Bílý macramé náramek', description: 'Jemný ručně vyráběný macramé náramek v bílé barvě.', price: 260 },
+  'ZB2Zk4mWQ4qjX4g4X-0Mxw': { title: 'Modrý macramé náramek', description: 'Ručně vyráběný macramé náramek v modrém odstínu.', price: 290 },
+  'eCrGqaylQUyArTFM9A4sLQ': { title: 'Malá zelená háčkovaná taška', description: 'Malá ručně háčkovaná taška v zeleném odstínu.', price: 1390 },
+  'Ekt0O-ndS7aqPxxsbTvA4w': { title: 'Malá modrá háčkovaná kabelka', description: 'Malá ručně háčkovaná kabelka v modrém odstínu.', price: 1490 },
+};
+
 const pickString = (value) => {
   if (typeof value === 'string') return value;
   if (value && typeof value === 'object') {
@@ -199,6 +222,32 @@ if (variantType) {
       }
     }
 
+    const cleanup = variantCleanup[variant.id];
+    if (cleanup) {
+      const titleField = Object.hasOwn(a, 'product_variant_name') ? 'product_variant_name' : Object.hasOwn(a, 'variant_name') ? 'variant_name' : 'name';
+      const descriptionField = Object.hasOwn(a, 'product_variant_description') ? 'product_variant_description' : Object.hasOwn(a, 'product_variant_desription') ? 'product_variant_desription' : Object.hasOwn(a, 'variant_description') ? 'variant_description' : 'description';
+      const priceField = Object.hasOwn(a, 'product_variant_price') ? 'product_variant_price' : Object.hasOwn(a, 'variant_price') ? 'variant_price' : 'price';
+      const currentPrice = a[priceField];
+      console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} title: "${name}" -> "${cleanup.title}"`);
+      console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} description: "${description}" -> "${cleanup.description}"`);
+      console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} price: "${pickString(currentPrice) || currentPrice || ''}" -> "${cleanup.price}"`);
+      if (APPLY) {
+        const localized = (raw, next) => raw && typeof raw === 'object' && !Array.isArray(raw)
+          ? { ...raw, [Object.keys(raw)[0] || 'en']: next }
+          : next;
+        const wasPublished = ['published', 'updated'].includes(variant.meta?.status);
+        await request(`/items/${variant.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ data: { type: 'item', id: variant.id, attributes: {
+            [titleField]: localized(a[titleField], cleanup.title),
+            [descriptionField]: localized(a[descriptionField], cleanup.description),
+            [priceField]: typeof currentPrice === 'object' && currentPrice !== null ? localized(currentPrice, cleanup.price) : cleanup.price,
+          } } }),
+        });
+        if (wasPublished) await request(`/items/${variant.id}/publish`, { method: 'PUT', body: JSON.stringify({ data: { type: 'item', id: variant.id } }) });
+      }
+    }
+
     for (const key of woolWidthKeys(a)) {
       const raw = a[key];
       const current = pickString(raw) || (typeof raw === 'number' ? raw : '');
@@ -231,6 +280,23 @@ if (variantType) {
 // changed; anything ambiguous is left untouched and shown by the audit.
 for (const product of products) {
   const a = product.attributes || {};
+  const targetPrice = productPrices[product.id];
+  if (targetPrice !== undefined) {
+    const priceField = Object.hasOwn(a, 'product_price') ? 'product_price' : 'price';
+    const rawPrice = a[priceField];
+    const currentPrice = pickString(rawPrice) || rawPrice || '';
+    if (Number(currentPrice) !== targetPrice) {
+      console.log(`\nPRODUCT ${product.id} ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} ${priceField}: "${currentPrice}" -> "${targetPrice}"`);
+      if (APPLY) {
+        const wasPublished = ['published', 'updated'].includes(product.meta?.status);
+        const nextValue = rawPrice && typeof rawPrice === 'object' && !Array.isArray(rawPrice)
+          ? { ...rawPrice, [Object.keys(rawPrice)[0] || 'en']: targetPrice }
+          : targetPrice;
+        await request(`/items/${product.id}`, { method: 'PUT', body: JSON.stringify({ data: { type: 'item', id: product.id, attributes: { [priceField]: nextValue } } }) });
+        if (wasPublished) await request(`/items/${product.id}/publish`, { method: 'PUT', body: JSON.stringify({ data: { type: 'item', id: product.id } }) });
+      }
+    }
+  }
   for (const key of Object.keys(a).filter((k) => /wool_?width|string_?width/i.test(k))) {
     const raw = a[key];
     const current = pickString(raw) || (typeof raw === 'number' ? raw : '');
