@@ -37,9 +37,12 @@ const catalogue = [
 ];
 
 const aboutPageCopy = new Map([
-  ['Tady je napsáno něco hezkého o mně. Třeba, že jsem moc šikovná...', 'Háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. Každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.'],
-  ['Níže se podívejte, kdo pro vás s láskou háčkuje <3', 'Tvořím především kabelky, tašky, peněženky a drobné doplňky. Baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.'],
-  ['Rádi byste viděli, jak produkty vznikají? Mrkněte na video!', 'Jak výrobky vznikají? Nakoukněte do zákulisí mé tvorby.'],
+  ['Tady je napsáno něco hezkého o mně. Třeba, že jsem moc šikovná...', 'Háčkování Rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. Obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.'],
+  ['Háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. Každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.', 'Háčkování Rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. Obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.'],
+  ['Níže se podívejte, kdo pro vás s láskou háčkuje <3', 'Katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless CMS.'],
+  ['Tvořím především kabelky, tašky, peněženky a drobné doplňky. Baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.', 'Katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless CMS.'],
+  ['Rádi byste viděli, jak produkty vznikají? Mrkněte na video!', 'Projekt je stále ve vývoji a postupně přibývají další funkce a obsah.'],
+  ['Jak výrobky vznikají? Nakoukněte do zákulisí mé tvorby.', 'Projekt je stále ve vývoji a postupně přibývají další funkce a obsah.'],
 ]);
 
 function replaceStructuredTextValues(node, replacements) {
