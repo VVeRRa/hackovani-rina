@@ -316,6 +316,22 @@ const WORD_TRANSLATIONS: Record<string, { cs: string; en: string; de: string }> 
   'modrý náramek': { cs: 'Modrý náramek', en: 'Blue Bracelet', de: 'Blaues Armband' },
   'modry naramek': { cs: 'Modrý náramek', en: 'Blue Bracelet', de: 'Blaues Armband' },
 
+  // Curated translations for the cleaned portfolio/demo catalogue
+  'šalvějová háčkovaná kabelka': { cs: 'Šalvějová háčkovaná kabelka', en: 'Sage Green Crochet Handbag', de: 'Salbeigrüne Häkeltasche' },
+  'ručně háčkovaná kabelka v jemném šalvějově zeleném odstínu.': { cs: 'Ručně háčkovaná kabelka v jemném šalvějově zeleném odstínu.', en: 'Hand-crocheted handbag in a soft sage green shade.', de: 'Handgehäkelte Handtasche in einem sanften Salbeigrün.' },
+  'háčkované pouzdro': { cs: 'Háčkované pouzdro', en: 'Textured Crochet Pouch', de: 'Strukturiertes Häkeletui' },
+  'kompaktní ručně háčkované pouzdro s výraznou strukturou.': { cs: 'Kompaktní ručně háčkované pouzdro s výraznou strukturou.', en: 'Compact hand-crocheted pouch with a distinctive textured finish.', de: 'Kompaktes handgehäkeltes Etui mit markanter Struktur.' },
+  'mentolová háčkovaná peněženka': { cs: 'Mentolová háčkovaná peněženka', en: 'Mint Crochet Wallet', de: 'Mintgrüne Häkelgeldbörse' },
+  'ručně háčkovaná peněženka ve svěžím mentolovém odstínu.': { cs: 'Ručně háčkovaná peněženka ve svěžím mentolovém odstínu.', en: 'Hand-crocheted wallet in a fresh mint green shade.', de: 'Handgehäkelte Geldbörse in einem frischen Mintgrün.' },
+  'vínová háčkovaná taška': { cs: 'Vínová háčkovaná taška', en: 'Burgundy Crochet Bag', de: 'Bordeauxrote Häkeltasche' },
+  'elegantní ručně háčkovaná taška v sytém vínovém odstínu.': { cs: 'Elegantní ručně háčkovaná taška v sytém vínovém odstínu.', en: 'Elegant hand-crocheted bag in a rich burgundy shade.', de: 'Elegante handgehäkelte Tasche in einem satten Bordeauxrot.' },
+  'pudrově růžová háčkovaná kabelka': { cs: 'Pudrově růžová háčkovaná kabelka', en: 'Blush Pink Crochet Handbag', de: 'Puderrosa Häkeltasche' },
+  'elegantní ručně háčkovaná kabelka v pudrově růžové barvě s ozdobným řetízkem.': { cs: 'Elegantní ručně háčkovaná kabelka v pudrově růžové barvě s ozdobným řetízkem.', en: 'Elegant hand-crocheted handbag in blush pink with a decorative chain strap.', de: 'Elegante handgehäkelte Handtasche in Puderrosa mit dekorativem Kettenriemen.' },
+  'modrý macramé náramek': { cs: 'Modrý macramé náramek', en: 'Blue Macramé Bracelet', de: 'Blaues Makramee-Armband' },
+  'ručně vyráběný nastavitelný náramek v jemných modrých tónech.': { cs: 'Ručně vyráběný nastavitelný náramek v jemných modrých tónech.', en: 'Adjustable handmade bracelet in soft blue tones.', de: 'Verstellbares handgefertigtes Armband in sanften Blautönen.' },
+  'šedá háčkovaná kabelka': { cs: 'Šedá háčkovaná kabelka', en: 'Grey Crochet Handbag', de: 'Graue Häkeltasche' },
+  'kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.': { cs: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.', en: 'Compact hand-crocheted handbag in a versatile grey shade.', de: 'Kompakte handgehäkelte Handtasche in einem vielseitigen Grauton.' },
+
   // Delivery Times
   'doba dodání': { cs: 'Doba dodání', en: 'Delivery time', de: 'Lieferzeit' },
   'doba doruceni': { cs: 'Doba doručení', en: 'Delivery time', de: 'Lieferzeit' },
