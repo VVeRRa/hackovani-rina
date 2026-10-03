@@ -154,5 +154,107 @@ for (const item of products) {
   }
 }
 
+
+
+// --- Variant + wool-width audit ------------------------------------------------
+// Keep this dry-run-first as well: variant copy is less predictable than the seven
+// known product records, so show the real values before we decide what to rewrite.
+const variantType = itemTypes.find((t) => t.attributes?.api_key === 'product_variant');
+if (variantType) {
+  const variantResponse = await request('/items?filter[type]=product_variant&page[limit]=100');
+  const variants = variantResponse.data || [];
+  console.log(`\nVariants found: ${variants.length}`);
+
+  const woolWidthKeys = (attrs) =>
+    Object.keys(attrs || {}).filter((key) => /wool_?width|string_?width/i.test(key));
+
+  const normalizeMm = (value) => {
+    if (typeof value === 'number') return `${value} mm`;
+    if (typeof value !== 'string') return value;
+    const trimmed = value.trim();
+    if (!trimmed || /\bmm\b/i.test(trimmed)) return trimmed;
+    if (/^\d+(?:[.,]\d+)?$/.test(trimmed)) return `${trimmed} mm`;
+    return trimmed;
+  };
+
+  for (const variant of variants) {
+    const a = variant.attributes || {};
+    const name = pickString(a.product_variant_name || a.variant_name || a.name) || '(bez názvu)';
+    const description = pickString(
+      a.product_variant_description ||
+      a.variant_description ||
+      a.product_variant_desription ||
+      a.variant_desription ||
+      a.description
+    );
+    console.log(`\nVARIANT ${variant.id}: "${name}"`);
+    if (description) console.log(`  description: "${description}"`);
+
+    for (const key of woolWidthKeys(a)) {
+      const raw = a[key];
+      const current = pickString(raw) || (typeof raw === 'number' ? raw : '');
+      const next = normalizeMm(current);
+      if (current !== next) {
+        console.log(`  ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} ${key}: "${current}" -> "${next}"`);
+        if (APPLY) {
+          const wasPublished = ['published', 'updated'].includes(variant.meta?.status);
+          const nextValue =
+            raw && typeof raw === 'object' && !Array.isArray(raw)
+              ? { ...raw, [Object.keys(raw)[0] || 'en']: next }
+              : next;
+          await request(`/items/${variant.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ data: { type: 'item', id: variant.id, attributes: { [key]: nextValue } } }),
+          });
+          if (wasPublished) {
+            await request(`/items/${variant.id}/publish`, {
+              method: 'PUT',
+              body: JSON.stringify({ data: { type: 'item', id: variant.id } }),
+            });
+          }
+        }
+      }
+    }
+  }
+}
+
+// Normalize wool-width values on products too. Only plain numeric values are
+// changed; anything ambiguous is left untouched and shown by the audit.
+for (const product of products) {
+  const a = product.attributes || {};
+  for (const key of Object.keys(a).filter((k) => /wool_?width|string_?width/i.test(k))) {
+    const raw = a[key];
+    const current = pickString(raw) || (typeof raw === 'number' ? raw : '');
+    const trimmed = typeof current === 'string' ? current.trim() : current;
+    const next =
+      typeof trimmed === 'number'
+        ? `${trimmed} mm`
+        : typeof trimmed === 'string' && /^\d+(?:[.,]\d+)?$/.test(trimmed)
+          ? `${trimmed} mm`
+          : trimmed;
+
+    if (current !== next) {
+      console.log(`\nPRODUCT ${product.id} ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} ${key}: "${current}" -> "${next}"`);
+      if (APPLY) {
+        const wasPublished = ['published', 'updated'].includes(product.meta?.status);
+        const nextValue =
+          raw && typeof raw === 'object' && !Array.isArray(raw)
+            ? { ...raw, [Object.keys(raw)[0] || 'en']: next }
+            : next;
+        await request(`/items/${product.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ data: { type: 'item', id: product.id, attributes: { [key]: nextValue } } }),
+        });
+        if (wasPublished) {
+          await request(`/items/${product.id}/publish`, {
+            method: 'PUT',
+            body: JSON.stringify({ data: { type: 'item', id: product.id } }),
+          });
+        }
+      }
+    }
+  }
+}
+
 console.log(`\nMatched ${matched}/${products.length} product records.`);
 if (!APPLY) console.log('Dry run only. Re-run with --apply after reviewing the output.');
