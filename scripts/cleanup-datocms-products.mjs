@@ -57,8 +57,17 @@ const itemTypes = (await request('/item-types')).data;
 const productType = itemTypes.find((t) => t.attributes?.api_key === 'product');
 if (!productType) throw new Error('DatoCMS item type "product" not found.');
 
-const items = (await request('/items?page[limit]=100')).data;
-const products = items.filter((item) => item.relationships?.item_type?.data?.id === productType.id);
+// Ask DatoCMS for Product records directly. Filtering a generic /items response
+// by relationships.item_type is unreliable because CMA item payloads expose the
+// model relationship differently depending on the endpoint/response shape.
+const productResponse = await request(
+  `/items?filter[type]=${encodeURIComponent(productType.id)}&page[limit]=100`
+);
+const products = productResponse.data || [];
+
+console.log(`Connected to DatoCMS`);
+console.log(`Product model: ${productType.attributes?.api_key || 'product'} (${productType.id})`);
+console.log(`Products found: ${products.length}`);
 
 let matched = 0;
 for (const item of products) {
