@@ -36,6 +36,16 @@ const catalogue = [
   { match: [/grey bag\s*456/i, /gray bag\s*456/i, /^[sš]ed[aá]\s+ta[sš]ka\s*456$/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
 ];
 
+const productPropertyCleanup = {
+  'cqTbHI2oSbqYHpcJbS34Tg': { product_colour: 'zelená' },
+  'JQKKBaI6REeCj4W8H8iE_g': { product_colour: 'černo-červená' },
+  'N-_0b05QToKJlwDXyERAIQ': { product_colour: 'mintová' },
+  'Hswn-zUvSoWbphKfdJKOIw': { product_colour: 'červená' },
+  'UbIYdKkBSM2EjUj_qCCFxw': { product_colour: 'růžová' },
+  'Mvuv3EkRRgOD-Ki2wXPkwQ': { product_colour: 'modrá' },
+  'PklZzwuTTq6evDrS33585Q': { product_colour: 'šedá' },
+};
+
 const productPrices = {
   'PklZzwuTTq6evDrS33585Q': 1490,
   'Mvuv3EkRRgOD-Ki2wXPkwQ': 290,
@@ -318,12 +328,35 @@ if (variantType) {
 // changed; anything ambiguous is left untouched and shown by the audit.
 for (const product of products) {
   const a = product.attributes || {};
-  // Audit main-product display properties as well (colors, sizes, material, etc.)
-  // so legacy test values such as "zelena"/"modra" are visible before cleanup.
+  // Audit and normalize main-product display properties.
   for (const [key, raw] of Object.entries(a)) {
     if (/color|colour|size|material/i.test(key)) {
       const shown = pickString(raw) || (typeof raw === 'number' ? raw : '');
       if (shown !== '' && shown !== undefined) console.log(`PRODUCT PROPERTY ${product.id} ${key}: "${shown}"`);
+    }
+  }
+  const propertyCleanup = productPropertyCleanup[product.id];
+  if (propertyCleanup) {
+    for (const [key, next] of Object.entries(propertyCleanup)) {
+      if (!Object.hasOwn(a, key)) continue;
+      const raw = a[key];
+      const current = pickString(raw);
+      if (current === next) continue;
+      console.log(`PRODUCT ${product.id} ${APPLY ? 'UPDATE' : 'WOULD UPDATE'} ${key}: "${current}" -> "${next}"`);
+      if (APPLY) {
+        const wasPublished = ['published', 'updated'].includes(product.meta?.status);
+        const nextValue = raw && typeof raw === 'object' && !Array.isArray(raw)
+          ? { ...raw, [Object.keys(raw)[0] || 'en']: next }
+          : next;
+        await request(`/items/${product.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ data: { type: 'item', id: product.id, attributes: { [key]: nextValue } } }),
+        });
+        if (wasPublished) await request(`/items/${product.id}/publish`, {
+          method: 'PUT',
+          body: JSON.stringify({ data: { type: 'item', id: product.id } }),
+        });
+      }
     }
   }
 
