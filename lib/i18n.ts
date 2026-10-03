@@ -443,6 +443,21 @@ const WORD_TRANSLATIONS: Record<string, { cs: string; en: string; de: string }> 
     en: 'Here is something nice written about me.',
     de: 'Hier steht etwas Schönes über mich.'
   },
+  'háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.': {
+    cs: 'Háčkování je pro mě způsob, jak spojit kreativitu, barvy a poctivou ruční práci. Každý výrobek vzniká postupně, očko po očku, a každý je díky tomu trochu originál.',
+    en: 'Crochet is my way of combining creativity, colour and honest handcraft. Every piece grows stitch by stitch, which makes each one a little unique.',
+    de: 'Häkeln ist für mich eine Möglichkeit, Kreativität, Farbe und ehrliche Handarbeit zu verbinden. Jedes Stück entsteht Masche für Masche und ist dadurch ein kleines Unikat.'
+  },
+  'tvořím především kabelky, tašky, peněženky a drobné doplňky. baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.': {
+    cs: 'Tvořím především kabelky, tašky, peněženky a drobné doplňky. Baví mě kombinovat jednoduché tvary s výraznými barvami a vytvářet věci, které nejen dobře vypadají, ale dají se opravdu používat.',
+    en: 'I mainly create handbags, bags, wallets and small accessories. I enjoy combining simple shapes with distinctive colours to make pieces that look good and are genuinely useful.',
+    de: 'Ich fertige vor allem Handtaschen, Taschen, Geldbörsen und kleine Accessoires. Dabei kombiniere ich gern klare Formen mit ausdrucksstarken Farben und gestalte Stücke, die schön aussehen und im Alltag wirklich praktisch sind.'
+  },
+  'jak výrobky vznikají? nakoukněte do zákulisí mé tvorby.': {
+    cs: 'Jak výrobky vznikají? Nakoukněte do zákulisí mé tvorby.',
+    en: 'How are the pieces made? Take a look behind the scenes.',
+    de: 'Wie entstehen die Stücke? Werfen Sie einen Blick hinter die Kulissen.'
+  },
   'níže se podívejte, kdo pro vás s láskou háčkuje <3': {
     cs: 'Níže se podívejte, kdo pro vás s láskou háčkuje <3',
     en: 'Take a look below at who crochets for you with love <3',
