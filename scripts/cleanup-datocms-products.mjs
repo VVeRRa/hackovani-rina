@@ -117,9 +117,28 @@ for (const item of products) {
   if (!APPLY) continue;
 
   const wasPublished = ['published', 'updated'].includes(item.meta?.status);
+  // These fields are localized in DatoCMS, so CMA requires a locale hash
+  // even though the application uses Czech as the source text and translates
+  // dynamic content at runtime.
+  const localizedValue = (original, next) => {
+    if (original && typeof original === 'object' && !Array.isArray(original)) {
+      return { ...original, cs: next };
+    }
+    return { cs: next };
+  };
+
   await request(`/items/${item.id}`, {
     method: 'PUT',
-    body: JSON.stringify({ data: { type: 'item', id: item.id, attributes: { [titleField]: entry.title, [descriptionField]: entry.description } } }),
+    body: JSON.stringify({
+      data: {
+        type: 'item',
+        id: item.id,
+        attributes: {
+          [titleField]: localizedValue(a[titleField], entry.title),
+          [descriptionField]: localizedValue(a[descriptionField], entry.description),
+        },
+      },
+    }),
   });
 
   if (wasPublished) {
