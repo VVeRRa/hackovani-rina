@@ -60,14 +60,41 @@ if (!productType) throw new Error('DatoCMS item type "product" not found.');
 // Ask DatoCMS for Product records directly. Filtering a generic /items response
 // by relationships.item_type is unreliable because CMA item payloads expose the
 // model relationship differently depending on the endpoint/response shape.
+const siteResponse = await request('/site');
+const site = siteResponse.data;
+const allItemsResponse = await request('/items?page[limit]=100');
+const allItems = allItemsResponse.data || [];
+
+// DatoCMS accepts either the model ID or api_key in filter[type]. Use the
+// api_key here because it is human-readable in diagnostics as well.
+const productApiKey = productType.attributes?.api_key || 'product';
 const productResponse = await request(
-  `/items?filter[type]=${encodeURIComponent(productType.id)}&page[limit]=100`
+  `/items?filter[type]=${encodeURIComponent(productApiKey)}&page[limit]=100`
 );
 const products = productResponse.data || [];
 
 console.log(`Connected to DatoCMS`);
-console.log(`Product model: ${productType.attributes?.api_key || 'product'} (${productType.id})`);
+console.log(`Site: ${site?.attributes?.name || site?.id || '(unknown)'}`);
+console.log(`Models visible to token: ${itemTypes.length}`);
+console.log(
+  itemTypes
+    .filter((type) => !type.attributes?.modular_block)
+    .map((type) => `  - ${type.attributes?.name || '(unnamed)'} [${type.attributes?.api_key}] (${type.id})`)
+    .join('\\n')
+);
+console.log(`All records visible to token: ${allItems.length}`);
+console.log(`Product model: ${productApiKey} (${productType.id})`);
 console.log(`Products found: ${products.length}`);
+
+if (products.length === 0 && allItems.length > 0) {
+  console.log('\\nRecord model IDs visible in the generic /items response:');
+  const counts = new Map();
+  for (const item of allItems) {
+    const typeId = item.relationships?.item_type?.data?.id || '(missing relationship)';
+    counts.set(typeId, (counts.get(typeId) || 0) + 1);
+  }
+  for (const [typeId, count] of counts) console.log(`  - ${typeId}: ${count}`);
+}
 
 let matched = 0;
 for (const item of products) {
