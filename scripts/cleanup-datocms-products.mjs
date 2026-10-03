@@ -121,10 +121,15 @@ for (const item of products) {
   // even though the application uses Czech as the source text and translates
   // dynamic content at runtime.
   const localizedValue = (original, next) => {
+    // This DatoCMS environment currently defines only the "en" locale.
+    // Product source copy lives in that locale even when the source text is Czech;
+    // the storefront translates dynamic content at runtime via lib/i18n.ts.
     if (original && typeof original === 'object' && !Array.isArray(original)) {
-      return { ...original, cs: next };
+      const locales = Object.keys(original);
+      const locale = locales[0] || 'en';
+      return { ...original, [locale]: next };
     }
-    return { cs: next };
+    return { en: next };
   };
 
   await request(`/items/${item.id}`, {
