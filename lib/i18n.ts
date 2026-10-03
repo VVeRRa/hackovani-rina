@@ -437,6 +437,28 @@ const WORD_TRANSLATIONS: Record<string, { cs: string; en: string; de: string }> 
   'material': { cs: 'Materiál', en: 'Material', de: 'Material' },
   'hmotnost': { cs: 'Hmotnost', en: 'Weight', de: 'Gewicht' },
 
+  // Portfolio/demo project copy
+  'háčkování rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.': {
+    cs: 'Háčkování Rina je ukázkový e-shop zaměřený na ručně vyráběné háčkované doplňky. Obsah obchodu slouží jako demonstrace jeho funkcí a práce s produkty.',
+    en: 'Háčkování Rina is a demo e-commerce project focused on handmade crochet accessories. The store content demonstrates its features and product-data workflows.',
+    de: 'Háčkování Rina ist ein Demo-Onlineshop für handgefertigte Häkelaccessoires. Die Inhalte dienen dazu, die Funktionen und Produktdaten-Workflows des Shops zu demonstrieren.'
+  },
+  'katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless cms.': {
+    cs: 'Katalog ukazuje práci s kategoriemi, variantami, vlastnostmi produktů, filtrováním a vícejazyčným obsahem spravovaným přes headless CMS.',
+    en: 'The catalogue demonstrates categories, variants, product attributes, filtering and multilingual content managed through a headless CMS.',
+    de: 'Der Katalog demonstriert Kategorien, Varianten, Produktattribute, Filterung und mehrsprachige Inhalte, die über ein Headless CMS verwaltet werden.'
+  },
+  'projekt je stále ve vývoji a postupně přibývají další funkce a obsah.': {
+    cs: 'Projekt je stále ve vývoji a postupně přibývají další funkce a obsah.',
+    en: 'The project is still in development, with more features and content being added over time.',
+    de: 'Das Projekt befindet sich noch in Entwicklung und wird schrittweise um weitere Funktionen und Inhalte ergänzt.'
+  },
+  'ukázkový projekt — produkty, fotografie a obsah slouží pouze pro demonstrační účely.': {
+    cs: 'Ukázkový projekt — produkty, fotografie a obsah slouží pouze pro demonstrační účely.',
+    en: 'Demo project — products, images and content are for demonstration purposes only.',
+    de: 'Demo-Projekt — Produkte, Bilder und Inhalte dienen ausschließlich zu Demonstrationszwecken.'
+  },
+
   // DatoCMS Page Structured Text Paragraphs & Sentences
   'tady je napsáno něco hezkého o mně.': {
     cs: 'Tady je napsáno něco hezkého o mně.',
