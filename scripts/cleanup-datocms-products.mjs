@@ -36,6 +36,19 @@ const catalogue = [
   { match: [/grey bag\s*456/i, /gray bag\s*456/i, /^[sš]ed[aá]\s+ta[sš]ka\s*456$/i], title: 'Šedá háčkovaná kabelka', description: 'Kompaktní ručně háčkovaná kabelka v univerzálním šedém odstínu.' },
 ];
 
+const pagePlaceholderPatterns = [
+  /tady je naps[aá]no n[eě]co hezk[eé]ho o mn[eě]/i,
+  /jsem moc [sš]ikovn[aá]/i,
+];
+
+function collectStructuredTextStrings(node, out = []) {
+  if (!node || typeof node !== 'object') return out;
+  if (typeof node.value === 'string') out.push(node.value);
+  if (Array.isArray(node.children)) node.children.forEach((child) => collectStructuredTextStrings(child, out));
+  if (node.document) collectStructuredTextStrings(node.document, out);
+  return out;
+}
+
 const productPropertyCleanup = {
   'cqTbHI2oSbqYHpcJbS34Tg': { product_colour: 'zelená' },
   'JQKKBaI6REeCj4W8H8iE_g': { product_colour: 'černo-červená' },
@@ -407,6 +420,28 @@ for (const product of products) {
           });
         }
       }
+    }
+  }
+}
+
+// Audit CMS pages for obvious WIP placeholders. We deliberately do not rewrite
+// structured text automatically: page content and blocks deserve a separate,
+// reviewable cleanup rather than a risky blind mutation.
+const pageModel = models.find((m) => m.attributes?.api_key === 'page');
+if (pageModel) {
+  const pages = allItems.filter((item) => item.relationships?.item_type?.data?.id === pageModel.id);
+  console.log(`\nPages found: ${pages.length}`);
+  for (const page of pages) {
+    const a = page.attributes || {};
+    const title = pickString(a.title) || '';
+    const slug = pickString(a.slug) || '';
+    const strings = collectStructuredTextStrings(a.structured_text);
+    console.log(`\nPAGE ${page.id}: "${title}" [${slug}]`);
+    for (const value of strings) {
+      const clean = value.trim();
+      if (!clean) continue;
+      const marker = pagePlaceholderPatterns.some((pattern) => pattern.test(clean)) ? '  PLACEHOLDER' : '  TEXT';
+      console.log(`${marker}: "${clean}"`);
     }
   }
 }
